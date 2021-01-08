@@ -3,10 +3,17 @@ package com.edevelopers.realdbtime.Lib;
 
 
 import com.edevelopers.realdbtime.Model.DBColumn;
+import com.edevelopers.realdbtime.Model.DBColumnResult;
 
 import java.util.ArrayList;
 
 public class Const {
+
+    public static final int GET_TAG_INSERT = 1;
+    public static final int GET_TAG_UPDATE = 2;
+    public static final int GET_TAG_GETDATA = 2;
+    public static final int GET_TAG_GETDATA_WHERE = 2;
+
 
     public static final String TAG = "RealTime_Db_Live";
     public static final String api_key = "api_key";
@@ -27,6 +34,55 @@ public class Const {
     public static final String second_t_start = ", '\"'";
     public static final String second_t_end = ",','";
 
+    public static final String INSERT_START_INIT = "INSERT INTO ";
+    public static final String INSERT_START_VALUES = "VALUES ";
+    public static final String INSERT_HEAD_DECLARE = "`";
+    public static final String INSERT_separater_DECLARE = ",";
+    public static final String INSERT_VALUE_HEAD_DECLARE = "'";
+
+
+    public static final String WHERE_CLAUS_START = " WHERE ";
+    String str = "Where email = 'admin@example.com'";
+
+    public static String wclausebuilder(ArrayList<DBColumnResult> DBcolres){
+        String wherecalus = "";
+        int warrsize = DBcolres.size();
+        warrsize = warrsize -1;
+        for(int i = 0; i < DBcolres.size(); i++){
+            if(warrsize == i){
+                wherecalus += "`" +DBcolres.get(i).getColumnname()+"` = '"+ DBcolres.get(i).getColumnResult()+"' " ;
+            }else{
+                wherecalus += "`" +DBcolres.get(i).getColumnname()+"` = '"+ DBcolres.get(i).getColumnResult()+"' and " ;
+            }
+        }
+
+        String result = WHERE_CLAUS_START + wherecalus;
+        return result;
+    }
+
+    public static String thirdlevelbuilder_where(String TableName, ArrayList<DBColumn> DBcol,ArrayList<DBColumnResult> DBcolres){
+        String result = BEST_LEVEL + BRACK_START + BETTER_lEVEL + BRACK_START +" SELECT CONCAT(";
+
+        String res = "";
+        int arrsize = DBcol.size();
+        arrsize = arrsize-1;
+        for(int i = 0; i < DBcol.size(); i++){
+            if(arrsize == i){
+                res += first_t_start+DBcol.get(i).getColumnname()+first_t_end+mid_t +DBcol.get(i).getColumnname()+second_t_start;
+            }
+            else{
+                res += first_t_start+DBcol.get(i).getColumnname()+first_t_end+mid_t +DBcol.get(i).getColumnname()+second_t_start+second_t_end;
+            }
+        }
+
+        String wresult = wclausebuilder(DBcolres);
+
+        result += res;
+        result += BRACK_end +" AS my_json FROM "+TableName+" "+wresult + " ";
+        result +=  BRACK_end + BOTTOM_SECOND_lEVEL + BRACK_end + BOTTOM_LAST_lEVEL;
+        return result;
+    }
+
     public static String thirdlevelbuilder(String TableName, ArrayList<DBColumn> DBcol){
         String result = BEST_LEVEL + BRACK_START + BETTER_lEVEL + BRACK_START +" SELECT CONCAT(";
 
@@ -45,6 +101,50 @@ public class Const {
         result += res;
         result += BRACK_end +" AS my_json FROM "+TableName+" ";
         result +=  BRACK_end + BOTTOM_SECOND_lEVEL + BRACK_end + BOTTOM_LAST_lEVEL;
+        return result;
+    }
+
+    public static String insertQueryBuilder(String TableName, ArrayList<DBColumnResult> DBcolres){
+        String start_result = INSERT_START_INIT + INSERT_HEAD_DECLARE + TableName + INSERT_HEAD_DECLARE + BRACK_START ;
+        String end_result = INSERT_START_VALUES + BRACK_START ;
+
+        String end_start_result = BRACK_end;
+        String end_end_result = BRACK_end+";";
+
+        String res_st = "";
+        String res_end = "";
+        int arrsize = DBcolres.size();
+        arrsize = arrsize-1;
+        for(int i = 0; i < DBcolres.size(); i++){
+            if(arrsize == i){
+                res_st += INSERT_HEAD_DECLARE+DBcolres.get(i).getColumnname()+INSERT_HEAD_DECLARE;
+                res_end += INSERT_VALUE_HEAD_DECLARE+DBcolres.get(i).getColumnResult()+INSERT_VALUE_HEAD_DECLARE;
+            }
+            else{
+                res_st += INSERT_HEAD_DECLARE+DBcolres.get(i).getColumnname()+INSERT_HEAD_DECLARE+INSERT_separater_DECLARE;
+                res_end += INSERT_VALUE_HEAD_DECLARE+DBcolres.get(i).getColumnResult()+INSERT_VALUE_HEAD_DECLARE+INSERT_separater_DECLARE;
+            }
+        }
+
+        String result = start_result + res_st + end_start_result + end_result + res_end + end_end_result;
+        return result;
+    }
+
+    public static String updateQueryBuilder(String TableName, ArrayList<DBColumnResult> DBcolvalue, ArrayList<DBColumnResult> DBcolwhere){
+        String HeadUPdate = "UPDATE  `"+TableName+"` SET ";
+        String upcalus = "";
+        int uparrsize = DBcolvalue.size();
+        uparrsize = uparrsize -1;
+        for(int i = 0; i < DBcolvalue.size(); i++){
+            if(uparrsize == i){
+                upcalus += "`" +DBcolvalue.get(i).getColumnname()+"` = '"+ DBcolvalue.get(i).getColumnResult()+"' " ;
+            }else{
+                upcalus += "`" +DBcolvalue.get(i).getColumnname()+"` = '"+ DBcolvalue.get(i).getColumnResult()+"',  " ;
+            }
+        }
+
+        String wresult = wclausebuilder(DBcolwhere);
+        String result = HeadUPdate + upcalus + wresult +" ;";
         return result;
     }
 
