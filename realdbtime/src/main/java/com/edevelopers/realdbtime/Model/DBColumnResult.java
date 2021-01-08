@@ -4,10 +4,17 @@ public class DBColumnResult {
 
     String Columnname;
     String ColumnResult;
+    int index;
 
     public DBColumnResult(String Columnname,String ColumnResult){
         this.Columnname = Columnname;
         this.ColumnResult = ColumnResult;
+    }
+
+    public DBColumnResult(String Columnname,String ColumnResult,int index){
+        this.Columnname = Columnname;
+        this.ColumnResult = ColumnResult;
+        this.index = index;
     }
 
     public String getColumnname() {
@@ -16,5 +23,9 @@ public class DBColumnResult {
 
     public String getColumnResult() {
         return ColumnResult;
+    }
+
+    public int getIndex() {
+        return index;
     }
 }

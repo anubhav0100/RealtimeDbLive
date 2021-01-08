@@ -11,8 +11,8 @@ public class Const {
 
     public static final int GET_TAG_INSERT = 1;
     public static final int GET_TAG_UPDATE = 2;
-    public static final int GET_TAG_GETDATA = 2;
-    public static final int GET_TAG_GETDATA_WHERE = 2;
+    public static final int GET_TAG_GETDATA = 3;
+    public static final int GET_TAG_GETDATA_WHERE = 4;
 
 
     public static final String TAG = "RealTime_Db_Live";
@@ -68,10 +68,13 @@ public class Const {
         arrsize = arrsize-1;
         for(int i = 0; i < DBcol.size(); i++){
             if(arrsize == i){
-                res += first_t_start+DBcol.get(i).getColumnname()+first_t_end+mid_t +DBcol.get(i).getColumnname()+second_t_start;
+                res += "\""+DBcol.get(i).getColumnname()+"\":','\"'," +DBcol.get(i).getColumnname()+", '\"'";
+            }
+            else if(i == 0){
+                res += "'\""+DBcol.get(i).getColumnname()+"\":','\"'," +DBcol.get(i).getColumnname()+", '\"'"+",',";
             }
             else{
-                res += first_t_start+DBcol.get(i).getColumnname()+first_t_end+mid_t +DBcol.get(i).getColumnname()+second_t_start+second_t_end;
+                res += "\""+DBcol.get(i).getColumnname()+"\":','\"'," +DBcol.get(i).getColumnname()+", '\"'"+",',";
             }
         }
 
@@ -91,10 +94,13 @@ public class Const {
         arrsize = arrsize-1;
         for(int i = 0; i < DBcol.size(); i++){
             if(arrsize == i){
-                res += first_t_start+DBcol.get(i).getColumnname()+first_t_end+mid_t +DBcol.get(i).getColumnname()+second_t_start;
+                res += "\""+DBcol.get(i).getColumnname()+"\":','\"'," +DBcol.get(i).getColumnname()+", '\"'";
+            }
+            else if(i == 0){
+                res += "'\""+DBcol.get(i).getColumnname()+"\":','\"'," +DBcol.get(i).getColumnname()+", '\"'"+",',";
             }
             else{
-                res += first_t_start+DBcol.get(i).getColumnname()+first_t_end+mid_t +DBcol.get(i).getColumnname()+second_t_start+second_t_end;
+                res += "\""+DBcol.get(i).getColumnname()+"\":','\"'," +DBcol.get(i).getColumnname()+", '\"'"+",',";
             }
         }
 

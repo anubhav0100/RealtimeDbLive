@@ -115,4 +115,14 @@ public class RequestProcess {
         });
     }
 
+    public static String getresultaccordingindex(String colname,int index,ArrayList<DBColumnResult> Result){
+        String Value = "";
+        for(int i = 0; i < Result.size();i++){
+            if(index == Result.get(i).getIndex() && colname.equals(Result.get(i).getColumnname())){
+                Value = Result.get(i).getColumnResult();
+            }
+         }
+        return Value;
+    }
+
 }

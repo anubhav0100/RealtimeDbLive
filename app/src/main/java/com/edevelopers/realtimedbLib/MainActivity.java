@@ -20,7 +20,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         RequestProcess.dbcol = new ArrayList<>();
-        RequestProcess.setmodelmod("user_name"); // set column name
+        RequestProcess.setmodelmod("phonenumber"); // set column name
         RequestProcess.setmodelmod("email"); // set column name
 
         String ApiKEy = "";
@@ -28,37 +28,37 @@ public class MainActivity extends AppCompatActivity {
         String AppName = "";
         String Table_Name = "users";
 
-//        RequestProcess.getdatamod(MainActivity.this, ApiKEy, ApiSecret, AppName, Table_Name, RequestProcess.dbcol, new RequestProcess.Callback() {
-//            @Override
-//            public void onSuccess(ArrayList<DBColumnResult> Result) {
-//                //GEt Your Result HEre
-//            }
-//
-//            @Override
-//            public void onError(String Error) {
-//                // Show Error
-//            }
-//        });
-
-        RequestProcess.dbcolinsert = new ArrayList<>();
-        RequestProcess.setmodelmodinsert("email","info@edevlopers.com"); // set column name
-        RequestProcess.setmodelmodinsert("name","Edevlopers"); // set column name
-        RequestProcess.setmodelmodinsert("phonenumber","+911234569870"); // set column name
-        RequestProcess.setmodelmodinsert("refcode","refcode"); // set column name
-        RequestProcess.setmodelmodinsert("appied_refcode","N/A"); // set column name
-        RequestProcess.setmodelmodinsert("status","1"); // set column name
-
-        RequestProcess.savedatamod(MainActivity.this, ApiKEy, ApiSecret, AppName, Table_Name, RequestProcess.dbcolinsert, new RequestProcess.Callbackres() {
+        RequestProcess.getdatamod(MainActivity.this, ApiKEy, ApiSecret, AppName, Table_Name, RequestProcess.dbcol, new RequestProcess.Callback() {
             @Override
-            public void onSuccess(String Result) {
-                String res = Result;
+            public void onSuccess(ArrayList<DBColumnResult> Result) {
+                //GEt Your Result HEre
             }
 
             @Override
             public void onError(String Error) {
-                String err = Error;
+                // Show Error
             }
         });
+
+//        RequestProcess.dbcolinsert = new ArrayList<>();
+//        RequestProcess.setmodelmodinsert("email","info@edevlopers.com"); // set column name
+//        RequestProcess.setmodelmodinsert("name","Edevlopers"); // set column name
+//        RequestProcess.setmodelmodinsert("phonenumber","+911234569870"); // set column name
+//        RequestProcess.setmodelmodinsert("refcode","refcode"); // set column name
+//        RequestProcess.setmodelmodinsert("appied_refcode","N/A"); // set column name
+//        RequestProcess.setmodelmodinsert("status","1"); // set column name
+//
+//        RequestProcess.savedatamod(MainActivity.this, ApiKEy, ApiSecret, AppName, Table_Name, RequestProcess.dbcolinsert, new RequestProcess.Callbackres() {
+//            @Override
+//            public void onSuccess(String Result) {
+//                String res = Result;
+//            }
+//
+//            @Override
+//            public void onError(String Error) {
+//                String err = Error;
+//            }
+//        });
 
     }
 }

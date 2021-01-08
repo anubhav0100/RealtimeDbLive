@@ -61,10 +61,13 @@ public class service_class {
                         for(int i = 0;i < response.length();i++){
                             JSONObject explrObject = response.getJSONObject(i);
                             try{
-                                fed.add (new DBColumnResult(
-                                        dbcol.get(i).getColumnname(),
-                                        explrObject.getString(dbcol.get(i).getColumnname())
-                                ));
+                                for(int j = 0;j < dbcol.size();j++){
+                                    fed.add (new DBColumnResult(
+                                            dbcol.get(j).getColumnname(),
+                                            explrObject.getString(dbcol.get(j).getColumnname()),
+                                            i
+                                    ));
+                                }
                             }catch (Exception e){
                                 callback.onError(explrObject.getString("Error"));
                             }
