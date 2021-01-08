@@ -91,7 +91,7 @@ public class service_class {
 
     public static void SaveData(ModelClass Modeldata, final Callbackres callback){
         RequestQueue queue= Volley.newRequestQueue(Modeldata.getContext());
-        String url = apiurl+"getresult";
+        String url = apiurl+"saveresult";
        // final ArrayList<DBColumn> dbcol = Modeldata.getDbcolumn();
 
         JSONObject jsonObject = new JSONObject();
