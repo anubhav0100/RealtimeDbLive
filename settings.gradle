@@ -1,0 +1,3 @@
+include ':realdbtime'
+include ':app'
+rootProject.name = "RealTimeDb"
