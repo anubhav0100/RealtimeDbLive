@@ -21,7 +21,6 @@ public class MainActivity extends AppCompatActivity {
 
         RequestProcess.dbcol = new ArrayList<>();
         RequestProcess.dbcolwhere = new ArrayList<>();
-        RequestProcess.setmodelmod("phonenumber"); // set column name
         RequestProcess.setmodelmod("email"); // set column name
 
         RequestProcess.setmodelmodWhere("email","info@edevlopers.com");

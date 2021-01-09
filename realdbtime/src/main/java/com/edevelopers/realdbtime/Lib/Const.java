@@ -63,15 +63,12 @@ public class Const {
     public static String thirdlevelbuilder_where(String TableName, ArrayList<DBColumn> DBcol,ArrayList<DBColumnResult> DBcolres){
         String result = BEST_LEVEL + BRACK_START + BETTER_lEVEL + BRACK_START +" SELECT CONCAT(";
 
-        String res = "";
+        String res = "'";
         int arrsize = DBcol.size();
         arrsize = arrsize-1;
         for(int i = 0; i < DBcol.size(); i++){
             if(arrsize == i){
                 res += "\""+DBcol.get(i).getColumnname()+"\":','\"'," +DBcol.get(i).getColumnname()+", '\"'";
-            }
-            else if(i == 0){
-                res += "'\""+DBcol.get(i).getColumnname()+"\":','\"'," +DBcol.get(i).getColumnname()+", '\"'"+",',";
             }
             else{
                 res += "\""+DBcol.get(i).getColumnname()+"\":','\"'," +DBcol.get(i).getColumnname()+", '\"'"+",',";
@@ -89,15 +86,12 @@ public class Const {
     public static String thirdlevelbuilder(String TableName, ArrayList<DBColumn> DBcol){
         String result = BEST_LEVEL + BRACK_START + BETTER_lEVEL + BRACK_START +" SELECT CONCAT(";
 
-        String res = "";
+        String res = "'";
         int arrsize = DBcol.size();
         arrsize = arrsize-1;
         for(int i = 0; i < DBcol.size(); i++){
             if(arrsize == i){
                 res += "\""+DBcol.get(i).getColumnname()+"\":','\"'," +DBcol.get(i).getColumnname()+", '\"'";
-            }
-            else if(i == 0){
-                res += "'\""+DBcol.get(i).getColumnname()+"\":','\"'," +DBcol.get(i).getColumnname()+", '\"'"+",',";
             }
             else{
                 res += "\""+DBcol.get(i).getColumnname()+"\":','\"'," +DBcol.get(i).getColumnname()+", '\"'"+",',";
