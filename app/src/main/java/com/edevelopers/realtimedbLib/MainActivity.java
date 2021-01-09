@@ -20,15 +20,18 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         RequestProcess.dbcol = new ArrayList<>();
+        RequestProcess.dbcolwhere = new ArrayList<>();
         RequestProcess.setmodelmod("phonenumber"); // set column name
         RequestProcess.setmodelmod("email"); // set column name
+
+        RequestProcess.setmodelmodWhere("email","info@edevlopers.com");
 
         String ApiKEy = "";
         String ApiSecret = "";
         String AppName = "";
         String Table_Name = "users";
 
-        RequestProcess.getdatamod(MainActivity.this, ApiKEy, ApiSecret, AppName, Table_Name, RequestProcess.dbcol, new RequestProcess.Callback() {
+        RequestProcess.getdatamod_Where(MainActivity.this, ApiKEy, ApiSecret, AppName, Table_Name, RequestProcess.dbcol,RequestProcess.dbcolwhere, new RequestProcess.Callback() {
             @Override
             public void onSuccess(ArrayList<DBColumnResult> Result) {
                 //GEt Your Result HEre
