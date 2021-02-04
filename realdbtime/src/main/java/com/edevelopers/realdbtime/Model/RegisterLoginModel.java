@@ -1,7 +1,8 @@
 package com.edevelopers.realdbtime.Model;
 
-public class RegisterModel {
-    
+public class RegisterLoginModel {
+
+     String result = "";
      String ApiKey= "";
      String Api_Secret= "";
      String username= "";
@@ -14,8 +15,20 @@ public class RegisterModel {
      String address= "";
      String country= "";
 
+     public RegisterLoginModel (){
+
+     }
+
     public String getPassword() {
         return Password;
+    }
+
+    public String getResult() {
+        return result;
+    }
+
+    public void setResult(String result) {
+        this.result = result;
     }
 
     public String getPhonenumber() {

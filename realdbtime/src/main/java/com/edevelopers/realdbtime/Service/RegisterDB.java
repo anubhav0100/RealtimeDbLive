@@ -1,12 +1,14 @@
-package com.edevelopers.realdbtime.Model;
+package com.edevelopers.realdbtime.Service;
 
 import android.content.Context;
 
 import androidx.annotation.NonNull;
 
 import com.edevelopers.realdbtime.Lib.Const;
-import com.edevelopers.realdbtime.Service.RequestProcess;
-import com.edevelopers.realdbtime.Service.service_class;
+import com.edevelopers.realdbtime.Model.DBColumn;
+import com.edevelopers.realdbtime.Model.DBColumnResult;
+import com.edevelopers.realdbtime.Model.ModelClass;
+import com.edevelopers.realdbtime.Model.RegisterLoginModel;
 
 import java.util.ArrayList;
 
@@ -26,25 +28,25 @@ public class RegisterDB {
         void onError(String Error);
     }
 
-    public void setRegisterDB(@NonNull Context context,RegisterModel registerModel,final RequestProcess.Callbackres callback){
+    public void setRegisterDB(@NonNull Context context, RegisterLoginModel registerModel, final RequestProcess.Callbackres callback){
 
         RequestProcess.dbcolinsert = new ArrayList<DBColumnResult>();
 
-        RequestProcess.setmodelmodinsert("username",registerModel.username);
+        RequestProcess.setmodelmodinsert("username",registerModel.getUsername());
         RequestProcess.setmodelmodinsert("password","breplacepassword");
-        RequestProcess.setmodelmodinsert("email",registerModel.email);
-        RequestProcess.setmodelmodinsert("phonenumber",registerModel.phonenumber);
-        RequestProcess.setmodelmodinsert("first_name",registerModel.first_name);
-        RequestProcess.setmodelmodinsert("middle_name",registerModel.middle_name);
-        RequestProcess.setmodelmodinsert("last_name",registerModel.last_name);
-        RequestProcess.setmodelmodinsert("address",registerModel.address);
-        RequestProcess.setmodelmodinsert("country",registerModel.country);
+        RequestProcess.setmodelmodinsert("email",registerModel.getEmail());
+        RequestProcess.setmodelmodinsert("phonenumber",registerModel.getPhonenumber());
+        RequestProcess.setmodelmodinsert("first_name",registerModel.getFirst_name());
+        RequestProcess.setmodelmodinsert("middle_name",registerModel.getMiddle_name());
+        RequestProcess.setmodelmodinsert("last_name",registerModel.getLast_name());
+        RequestProcess.setmodelmodinsert("address",registerModel.getAddress());
+        RequestProcess.setmodelmodinsert("country",registerModel.getCountry());
         RequestProcess.setmodelmodinsert("logDate", Const.gettodaydate_timemysql_laravel());
 
         ModelClass modelclass = new ModelClass();
         ArrayList<DBColumn> emptydbcolumn = new ArrayList<>();
         ArrayList<DBColumnResult> emptycolwhere = new ArrayList<>();
-        modelclass = new ModelClass(context,registerModel.ApiKey,registerModel.Api_Secret,registerModel.Password,emptydbcolumn,RequestProcess.dbcolinsert,emptycolwhere, Const.GET_TAG_INSERT);
+        modelclass = new ModelClass(context,registerModel.getApiKey(),registerModel.getApi_Secret(),registerModel.getPassword(),emptydbcolumn,RequestProcess.dbcolinsert,emptycolwhere, Const.GET_TAG_INSERT);
         service_class.SaveDataRegister(modelclass, new service_class.Callbackres() {
             @Override
             public void onSuccess(String Result) {

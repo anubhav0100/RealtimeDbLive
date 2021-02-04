@@ -14,6 +14,7 @@ public class ModelClass {
     String api_secret="";
     String query="";
     String TableName = "";
+    String password = "";
     ArrayList<DBColumn> dbcolumn = new ArrayList<>();
 
     public ModelClass(){
@@ -40,6 +41,33 @@ public class ModelClass {
         else if(Const.GET_TAG_GETDATA_WHERE == type){
             this.query = Const.thirdlevelbuilder_where(TableName,dbcolumn,DBcolwhere);
         }
+    }
+
+    public ModelClass(Context context, String api_key, String apisecret, String Password,
+                      ArrayList<DBColumn> dbcolumn,ArrayList<DBColumnResult> DBcolres,ArrayList<DBColumnResult> DBcolwhere,int type){
+        this.context = context;
+        this.api_key = api_key;
+        this.api_secret = apisecret;
+        this.appname = "appname";
+        this.TableName = "users";
+        this.password = Password;
+        this.dbcolumn = dbcolumn;
+        if(Const.GET_TAG_INSERT == type){
+            this.query = Const.insertQueryBuilder(TableName,DBcolres);
+        }
+        else if(Const.GET_TAG_GETDATA == type){
+            this.query = Const.thirdlevelbuilder(TableName,dbcolumn);
+        }
+        if(Const.GET_TAG_UPDATE == type){
+            this.query = Const.updateQueryBuilder(TableName,DBcolres,DBcolwhere);
+        }
+        else if(Const.GET_TAG_GETDATA_WHERE == type){
+            this.query = Const.thirdlevelbuilder_where(TableName,dbcolumn,DBcolwhere);
+        }
+    }
+
+    public String getPassword() {
+        return password;
     }
 
     public Context getContext() {

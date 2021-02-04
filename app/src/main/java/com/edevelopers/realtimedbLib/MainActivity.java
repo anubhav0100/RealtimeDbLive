@@ -25,8 +25,8 @@ public class MainActivity extends AppCompatActivity {
 
         RequestProcess.setmodelmodWhere("email","info@edevlopers.com");
 
-        String ApiKEy = "";
-        String ApiSecret = "";
+        String ApiKEy = "apiem_live_aap";
+        String ApiSecret = "secreteml_live_secret";
         String AppName = "";
         String Table_Name = "users";
 

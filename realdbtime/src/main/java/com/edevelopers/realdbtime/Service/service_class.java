@@ -1,6 +1,9 @@
 package com.edevelopers.realdbtime.Service;
 
+import android.content.Context;
 import android.util.Log;
+
+import androidx.annotation.NonNull;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -12,6 +15,7 @@ import com.edevelopers.realdbtime.Lib.customRequest;
 import com.edevelopers.realdbtime.Model.DBColumn;
 import com.edevelopers.realdbtime.Model.DBColumnResult;
 import com.edevelopers.realdbtime.Model.ModelClass;
+import com.edevelopers.realdbtime.Model.RegisterLoginModel;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -36,6 +40,12 @@ public class service_class {
         void onError(String Error);
     }
 
+    public interface Callbacklogin
+    {
+        void onSuccess(RegisterLoginModel Result);
+
+        void onError(String Error);
+    }
 
     public static void RequestData(ModelClass Modeldata, final Callback callback){
         RequestQueue queue= Volley.newRequestQueue(Modeldata.getContext());
@@ -111,22 +121,131 @@ public class service_class {
             customRequest jsonObjectRequest = new customRequest(Request.Method.POST, url, jsonObject, new Response.Listener<JSONArray>() {
                 @Override
                 public void onResponse(JSONArray response) {
-                    String result = "";
+
                     try{
                         for(int i = 0;i < response.length();i++){
                             JSONObject explrObject = response.getJSONObject(i);
                             try{
-                                result = explrObject.getString("result");
+                                String result = explrObject.getString("result");
+                                callback.onSuccess(result);
                             }catch (Exception e){
-                                result = explrObject.getString("error");
+                                callback.onError(explrObject.getString("error"));
                             }
                         }
                     }
                     catch (Exception e){
                         callback.onError(e.getMessage());
                     }
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    callback.onError(error.getMessage());
+                }
+            });
 
-                    callback.onSuccess(result);
+            queue.add(jsonObjectRequest);
+        }catch (Exception e) {
+            Log.d(Const.TAG,""+e.getMessage());
+        }
+    }
+
+    public static void SaveDataRegister(@NonNull ModelClass Modeldata, final Callbackres callback){
+        RequestQueue queue= Volley.newRequestQueue(Modeldata.getContext());
+        String url = apiurl+"RegisterUser";
+        // final ArrayList<DBColumn> dbcol = Modeldata.getDbcolumn();
+
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.accumulate(Const.api_key, Modeldata.getApi_key());
+            jsonObject.accumulate(Const.appname, Modeldata.getAppname());
+            jsonObject.accumulate(Const.api_secret, Modeldata.getApi_secret());
+            jsonObject.accumulate(Const.query, Modeldata.getQuery());
+            jsonObject.accumulate(Const.reg, Modeldata.getPassword());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        try{
+            customRequest jsonObjectRequest = new customRequest(Request.Method.POST, url, jsonObject, new Response.Listener<JSONArray>() {
+                @Override
+                public void onResponse(JSONArray response) {
+                    try{
+                        for(int i = 0;i < response.length();i++){
+                            JSONObject explrObject = response.getJSONObject(i);
+                            try{
+                                String result = explrObject.getString("result");
+                                callback.onSuccess(result);
+                            }catch (Exception e){
+                                callback.onError(explrObject.getString("error"));
+
+                            }
+                        }
+                    }
+                    catch (Exception e){
+                        callback.onError(e.getMessage());
+                    }
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    callback.onError(error.getMessage());
+                }
+            });
+
+            queue.add(jsonObjectRequest);
+        }catch (Exception e) {
+            Log.d(Const.TAG,""+e.getMessage());
+        }
+    }
+
+    public static void RequestDataLogin(Context context, String ApiKEy, String ApiSecret, String Username, String Password, final service_class.Callbacklogin callback){
+        RequestQueue queue= Volley.newRequestQueue(context);
+        String url = apiurl+"LoginUser";
+
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.accumulate(Const.api_key, ApiKEy);
+            jsonObject.accumulate(Const.api_secret, ApiSecret);
+            jsonObject.accumulate(Const.g_username, Username);
+            jsonObject.accumulate(Const.g_password, Password);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        try{
+            customRequest jsonObjectRequest = new customRequest(Request.Method.POST, url, jsonObject, new Response.Listener<JSONArray>() {
+                @Override
+                public void onResponse(JSONArray response) {
+                    RegisterLoginModel fed = new RegisterLoginModel();
+                    try{
+                        for(int i = 0;i < response.length();i++){
+                            JSONObject explrObject = response.getJSONObject(i);
+                            try{
+                                String result = explrObject.getString("result");
+                                if(result.equals("0")){
+                                    callback.onError("Invalid Credientials");
+                                }
+                                else{
+                                    fed.setResult(result);
+                                    fed.setResult(explrObject.getString("username"));
+                                    fed.setResult(explrObject.getString("email"));
+                                    fed.setResult(explrObject.getString("phonenumber"));
+                                    fed.setResult(explrObject.getString("first_name"));
+                                    fed.setResult(explrObject.getString("middle_name"));
+                                    fed.setResult(explrObject.getString("last_name"));
+                                    fed.setResult(explrObject.getString("address"));
+                                    fed.setResult(explrObject.getString("country"));
+                                    fed.setResult(explrObject.getString("logDate"));
+                                }
+                            }catch (Exception e){
+                                callback.onError(explrObject.getString("error"));
+                            }
+                        }
+                    }
+                    catch (Exception e){
+                        callback.onError(e.getMessage());
+                    }
                 }
             }, new Response.ErrorListener() {
                 @Override

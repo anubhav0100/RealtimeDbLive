@@ -5,7 +5,9 @@ package com.edevelopers.realdbtime.Lib;
 import com.edevelopers.realdbtime.Model.DBColumn;
 import com.edevelopers.realdbtime.Model.DBColumnResult;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class Const {
 
@@ -19,6 +21,8 @@ public class Const {
     public static final String api_key = "api_key";
     public static final String appname = "appname";
     public static final String api_secret = "api_secret";
+    public static final String g_username = "g_username";
+    public static final String g_password = "g_password";
     public static final String query = "query";
 
     public static final String BRACK_START = " ( ";
@@ -42,6 +46,7 @@ public class Const {
 
 
     public static final String WHERE_CLAUS_START = " WHERE ";
+    public static final String reg = "password";
     String str = "Where email = 'admin@example.com'";
 
     public static String wclausebuilder(ArrayList<DBColumnResult> DBcolres){
@@ -146,6 +151,13 @@ public class Const {
         String wresult = wclausebuilder(DBcolwhere);
         String result = HeadUPdate + upcalus + wresult +" ;";
         return result;
+    }
+
+    public static String gettodaydate_timemysql_laravel() {
+        Date tdate = new Date();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String cdate = sdf.format(tdate).toString().trim();
+        return cdate;
     }
 
 }
