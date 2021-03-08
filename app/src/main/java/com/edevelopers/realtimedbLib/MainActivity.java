@@ -23,7 +23,7 @@ public class MainActivity extends AppCompatActivity {
         RequestProcess.dbcolwhere = new ArrayList<>();
         RequestProcess.setmodelmod("email"); // set column name
 
-        RequestProcess.setmodelmodWhere("email","info@edevlopers.com");
+        RequestProcess.setmodelmodWhere("email","info@something.com");
 
         String ApiKEy = "apiem_live_aap";
         String ApiSecret = "secreteml_live_secret";

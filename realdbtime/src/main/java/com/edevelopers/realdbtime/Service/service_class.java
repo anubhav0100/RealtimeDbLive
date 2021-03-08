@@ -24,7 +24,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 public class service_class {
-    public static final String apiurl = "http://emailsmsservice.edevlopersolutions.in/api/LoginRegister/";
+    public static final String apiurl = "http://emailsmsservice.edevlopers.com/api/LoginRegister/";
 
     public interface Callback
     {
