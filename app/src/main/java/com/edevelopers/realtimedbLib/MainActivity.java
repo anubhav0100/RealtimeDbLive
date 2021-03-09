@@ -30,8 +30,8 @@ public class MainActivity extends AppCompatActivity {
 
       //  RequestProcess.setmodelmodWhere("email","info@something.com");
 
-        String ApiKEy = "apiem_live_aap_AK/jLZvU5R7eWVUKmX5C6XcFcNMsp96ldF0w8qT93P7EQ6L4WDqBbQQhXEv/Yg5G/Q==";
-        String ApiSecret = "secreteml_live_secret_ANtd1RW2KQQPDaQFr0flsrOci4nlJ8SGp3e6RThzzHEyqMtIv58tCPTL1Hx873JFHw==";
+        String ApiKEy = "Api key";
+        String ApiSecret = "api secret";
         String AppName = "App";
         String Table_Name = "users";
 
