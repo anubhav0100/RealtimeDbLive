@@ -41,12 +41,12 @@ public class RequestProcess {
         dbcolinsert.add(new DBColumnResult(Colname,Value));
     }
 
-    public static void getdatamod(Context context, String ApiKey, String Api_Secret, String appname, String TableName ,
+    public static void getdatamod(Context context, String ApiKey, String Api_Secret, String appname, String TableName ,int dbtype,int limit,
                                   ArrayList<DBColumn> dbcolumn, final Callback callback){
         ModelClass modelclass = new ModelClass();
         ArrayList<DBColumnResult> emptycolres = new ArrayList<>();
         ArrayList<DBColumnResult> emptycolwhere = new ArrayList<>();
-        modelclass = new ModelClass(context,ApiKey,Api_Secret,appname,TableName,dbcolumn,emptycolres,emptycolwhere, Const.GET_TAG_GETDATA);
+        modelclass = new ModelClass(context,ApiKey,Api_Secret,appname,TableName,dbcolumn,emptycolres,emptycolwhere, Const.GET_TAG_GETDATA,dbtype,limit);
         service_class.RequestData(modelclass, new service_class.Callback() {
             @Override
             public void onSuccess(ArrayList<DBColumnResult> Result) {
@@ -61,10 +61,10 @@ public class RequestProcess {
     }
 
     public static void getdatamod_Where(Context context, String ApiKey, String Api_Secret, String appname,
-                                        String TableName , ArrayList<DBColumn> dbcolumn,ArrayList<DBColumnResult> DBcolres_where, final Callback callback){
+                                        String TableName ,int dbtype,int limit, ArrayList<DBColumn> dbcolumn,ArrayList<DBColumnResult> DBcolres_where, final Callback callback){
         ModelClass modelclass = new ModelClass();
         ArrayList<DBColumnResult> emptycolres = new ArrayList<>();
-        modelclass = new ModelClass(context,ApiKey,Api_Secret,appname,TableName,dbcolumn,emptycolres,DBcolres_where, Const.GET_TAG_GETDATA_WHERE);
+        modelclass = new ModelClass(context,ApiKey,Api_Secret,appname,TableName,dbcolumn,emptycolres,DBcolres_where, Const.GET_TAG_GETDATA_WHERE,dbtype,limit);
         service_class.RequestData(modelclass, new service_class.Callback() {
             @Override
             public void onSuccess(ArrayList<DBColumnResult> Result) {
@@ -83,7 +83,7 @@ public class RequestProcess {
         ModelClass modelclass = new ModelClass();
         ArrayList<DBColumn> emptydbcolumn = new ArrayList<>();
         ArrayList<DBColumnResult> emptycolwhere = new ArrayList<>();
-        modelclass = new ModelClass(context,ApiKey,Api_Secret,appname,TableName,emptydbcolumn,dbcolres,emptycolwhere, Const.GET_TAG_INSERT);
+        modelclass = new ModelClass(context,ApiKey,Api_Secret,appname,TableName,emptydbcolumn,dbcolres,emptycolwhere, Const.GET_TAG_INSERT,0,0);
         service_class.SaveData(modelclass, new service_class.Callbackres() {
             @Override
             public void onSuccess(String Result) {
@@ -101,7 +101,7 @@ public class RequestProcess {
                                      ArrayList<DBColumnResult> DBcolres, ArrayList<DBColumnResult> DBcolres_where, final Callbackres callback){
         ModelClass modelclass = new ModelClass();
         ArrayList<DBColumn> emptydbcolumn = new ArrayList<>();
-        modelclass = new ModelClass(context,ApiKey,Api_Secret,appname,TableName,emptydbcolumn,DBcolres,DBcolres_where, Const.GET_TAG_UPDATE);
+        modelclass = new ModelClass(context,ApiKey,Api_Secret,appname,TableName,emptydbcolumn,DBcolres,DBcolres_where, Const.GET_TAG_UPDATE,0,0);
         service_class.SaveData(modelclass, new service_class.Callbackres() {
             @Override
             public void onSuccess(String Result) {

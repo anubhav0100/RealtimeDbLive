@@ -4,6 +4,7 @@ import android.content.ComponentName;
 import android.content.Context;
 
 import com.edevelopers.realdbtime.Lib.Const;
+import com.edevelopers.realdbtime.Lib.ConstNew;
 
 import java.util.ArrayList;
 
@@ -22,7 +23,7 @@ public class ModelClass {
     }
 
     public ModelClass(Context context, String api_key, String apisecret, String appname, String TableName,
-                      ArrayList<DBColumn> dbcolumn,ArrayList<DBColumnResult> DBcolres,ArrayList<DBColumnResult> DBcolwhere,int type){
+                      ArrayList<DBColumn> dbcolumn,ArrayList<DBColumnResult> DBcolres,ArrayList<DBColumnResult> DBcolwhere,int type,int db,int limit){
         this.context = context;
         this.api_key = api_key;
         this.api_secret = apisecret;
@@ -33,13 +34,43 @@ public class ModelClass {
             this.query = Const.insertQueryBuilder(TableName,DBcolres);
         }
         else if(Const.GET_TAG_GETDATA == type){
-            this.query = Const.thirdlevelbuilder(TableName,dbcolumn);
+            if(db == Const.MSSQL){
+                if(limit > 0){
+                    this.query = ConstNew.getMSSQLQueryLimit(String.valueOf(limit),TableName,dbcolumn);
+                }
+                else {
+                    this.query = ConstNew.getMSSQLQuery(TableName,dbcolumn);
+                }
+            }
+            else {
+                if(limit > 0){
+                    this.query = Const.thirdlevelbuilderLimit(String.valueOf(limit),TableName,dbcolumn);
+                }
+                else {
+                    this.query = Const.thirdlevelbuilder(TableName,dbcolumn);
+                }
+            }
         }
         if(Const.GET_TAG_UPDATE == type){
             this.query = Const.updateQueryBuilder(TableName,DBcolres,DBcolwhere);
         }
         else if(Const.GET_TAG_GETDATA_WHERE == type){
-            this.query = Const.thirdlevelbuilder_where(TableName,dbcolumn,DBcolwhere);
+            if(db == Const.MSSQL){
+                if(limit > 0){
+                    this.query = ConstNew.getMSSQLQuery_where_Limit(String.valueOf(limit),TableName,dbcolumn,DBcolwhere);
+                }
+                else {
+                    this.query = ConstNew.getMSSQLQuery_where(TableName,dbcolumn,DBcolwhere);
+                }
+            }
+            else {
+                if(limit > 0){
+                    this.query = Const.thirdlevelbuilder_whereLimit(String.valueOf(limit),TableName,dbcolumn,DBcolwhere);
+                }
+                else {
+                    this.query = Const.thirdlevelbuilder_where(TableName,dbcolumn,DBcolwhere);
+                }
+            }
         }
     }
 

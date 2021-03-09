@@ -21,16 +21,21 @@ public class MainActivity extends AppCompatActivity {
 
         RequestProcess.dbcol = new ArrayList<>();
         RequestProcess.dbcolwhere = new ArrayList<>();
-        RequestProcess.setmodelmod("email"); // set column name
+        RequestProcess.setmodelmod("USERID"); // set column name
+        RequestProcess.setmodelmod("USERNAME"); // set column name
+        RequestProcess.setmodelmod("FIRST_NAME"); // set column name
+        RequestProcess.setmodelmod("LAST_NAME"); // set column name
+        RequestProcess.setmodelmod("EMAILID"); // set column name
+        RequestProcess.setmodelmod("ROLE"); // set column name
 
-        RequestProcess.setmodelmodWhere("email","info@something.com");
+      //  RequestProcess.setmodelmodWhere("email","info@something.com");
 
-        String ApiKEy = "apiem_live_aap";
-        String ApiSecret = "secreteml_live_secret";
-        String AppName = "";
+        String ApiKEy = "apiem_live_aap_AK/jLZvU5R7eWVUKmX5C6XcFcNMsp96ldF0w8qT93P7EQ6L4WDqBbQQhXEv/Yg5G/Q==";
+        String ApiSecret = "secreteml_live_secret_ANtd1RW2KQQPDaQFr0flsrOci4nlJ8SGp3e6RThzzHEyqMtIv58tCPTL1Hx873JFHw==";
+        String AppName = "App";
         String Table_Name = "users";
 
-        RequestProcess.getdatamod_Where(MainActivity.this, ApiKEy, ApiSecret, AppName, Table_Name, RequestProcess.dbcol,RequestProcess.dbcolwhere, new RequestProcess.Callback() {
+        RequestProcess.getdatamod(MainActivity.this, ApiKEy, ApiSecret, AppName, Table_Name, Const.MSSQL,0,RequestProcess.dbcol, new RequestProcess.Callback() {
             @Override
             public void onSuccess(ArrayList<DBColumnResult> Result) {
                 //GEt Your Result HEre

@@ -16,6 +16,9 @@ public class Const {
     public static final int GET_TAG_GETDATA = 3;
     public static final int GET_TAG_GETDATA_WHERE = 4;
 
+    public static final int MSSQL = 1;
+    public static final int MYSQL = 2;
+
 
     public static final String TAG = "RealTime_Db_Live";
     public static final String api_key = "api_key";
@@ -105,6 +108,50 @@ public class Const {
 
         result += res;
         result += BRACK_end +" AS my_json FROM "+TableName+" ";
+        result +=  BRACK_end + BOTTOM_SECOND_lEVEL + BRACK_end + BOTTOM_LAST_lEVEL;
+        return result;
+    }
+
+    public static String thirdlevelbuilder_whereLimit(String limit,String TableName, ArrayList<DBColumn> DBcol,ArrayList<DBColumnResult> DBcolres){
+        String result = BEST_LEVEL + BRACK_START + BETTER_lEVEL + BRACK_START +" SELECT CONCAT(";
+
+        String res = "'";
+        int arrsize = DBcol.size();
+        arrsize = arrsize-1;
+        for(int i = 0; i < DBcol.size(); i++){
+            if(arrsize == i){
+                res += "\""+DBcol.get(i).getColumnname()+"\":','\"'," +DBcol.get(i).getColumnname()+", '\"'";
+            }
+            else{
+                res += "\""+DBcol.get(i).getColumnname()+"\":','\"'," +DBcol.get(i).getColumnname()+", '\"'"+",',";
+            }
+        }
+
+        String wresult = wclausebuilder(DBcolres);
+
+        result += res;
+        result += BRACK_end +" AS my_json FROM "+TableName+" "+wresult + " limit "+limit+" ";
+        result +=  BRACK_end + BOTTOM_SECOND_lEVEL + BRACK_end + BOTTOM_LAST_lEVEL;
+        return result;
+    }
+
+    public static String thirdlevelbuilderLimit(String limit,String TableName, ArrayList<DBColumn> DBcol){
+        String result = BEST_LEVEL + BRACK_START + BETTER_lEVEL + BRACK_START +" SELECT CONCAT(";
+
+        String res = "'";
+        int arrsize = DBcol.size();
+        arrsize = arrsize-1;
+        for(int i = 0; i < DBcol.size(); i++){
+            if(arrsize == i){
+                res += "\""+DBcol.get(i).getColumnname()+"\":','\"'," +DBcol.get(i).getColumnname()+", '\"'";
+            }
+            else{
+                res += "\""+DBcol.get(i).getColumnname()+"\":','\"'," +DBcol.get(i).getColumnname()+", '\"'"+",',";
+            }
+        }
+
+        result += res;
+        result += BRACK_end +" AS my_json FROM "+TableName+" limit "+limit+" ";
         result +=  BRACK_end + BOTTOM_SECOND_lEVEL + BRACK_end + BOTTOM_LAST_lEVEL;
         return result;
     }
