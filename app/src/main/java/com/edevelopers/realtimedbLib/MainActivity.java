@@ -11,6 +11,7 @@ import com.edevelopers.realdbtime.Model.DBColumnResult;
 import com.edevelopers.realdbtime.Service.RequestProcess;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -30,15 +31,20 @@ public class MainActivity extends AppCompatActivity {
 
       //  RequestProcess.setmodelmodWhere("email","info@something.com");
 
-        String ApiKEy = "Api key";
-        String ApiSecret = "api secret";
+        String ApiKEy = "apiem_live_aap_AK/jLZvU5R7eWVUKmX5C6XcFcNMsp96ldF0w8qT93P7EQ6L4WDqBbQQhXEv/Yg5G/Q==";
+        String ApiSecret = "secreteml_live_secret_ANtd1RW2KQQPDaQFr0flsrOci4nlJ8SGp3e6RThzzHEyqMtIv58tCPTL1Hx873JFHw==";
         String AppName = "App";
         String Table_Name = "users";
 
         RequestProcess.getdatamod(MainActivity.this, ApiKEy, ApiSecret, AppName, Table_Name, Const.MSSQL,0,RequestProcess.dbcol, new RequestProcess.Callback() {
             @Override
-            public void onSuccess(ArrayList<DBColumnResult> Result) {
+            public void onSuccess(ArrayList<HashMap<String, String>> Result) {
                 //GEt Your Result HEre
+                if(Result.size() > 0){
+                    for(int i = 0;i<Result.size();i++){
+
+                    }
+                }
             }
 
             @Override

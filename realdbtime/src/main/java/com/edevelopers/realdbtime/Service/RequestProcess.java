@@ -8,6 +8,7 @@ import com.edevelopers.realdbtime.Model.DBColumnResult;
 import com.edevelopers.realdbtime.Model.ModelClass;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class RequestProcess {
 
@@ -17,7 +18,7 @@ public class RequestProcess {
 
     public interface Callback
     {
-        void onSuccess(ArrayList<DBColumnResult> Result);
+        void onSuccess(ArrayList<HashMap<String, String>> Result);
 
         void onError(String Error);
     }
@@ -49,7 +50,7 @@ public class RequestProcess {
         modelclass = new ModelClass(context,ApiKey,Api_Secret,appname,TableName,dbcolumn,emptycolres,emptycolwhere, Const.GET_TAG_GETDATA,dbtype,limit);
         service_class.RequestData(modelclass, new service_class.Callback() {
             @Override
-            public void onSuccess(ArrayList<DBColumnResult> Result) {
+            public void onSuccess(ArrayList<HashMap<String, String>> Result) {
                 callback.onSuccess(Result);
             }
 
@@ -67,7 +68,7 @@ public class RequestProcess {
         modelclass = new ModelClass(context,ApiKey,Api_Secret,appname,TableName,dbcolumn,emptycolres,DBcolres_where, Const.GET_TAG_GETDATA_WHERE,dbtype,limit);
         service_class.RequestData(modelclass, new service_class.Callback() {
             @Override
-            public void onSuccess(ArrayList<DBColumnResult> Result) {
+            public void onSuccess(ArrayList<HashMap<String, String>> Result) {
                 callback.onSuccess(Result);
             }
 
@@ -115,13 +116,10 @@ public class RequestProcess {
         });
     }
 
-    public static String getresultaccordingindex(String colname,int index,ArrayList<DBColumnResult> Result){
+    public static String getresult(String colname,int index,ArrayList<HashMap<String, String>> Result){
         String Value = "";
-        for(int i = 0; i < Result.size();i++){
-            if(index == Result.get(i).getIndex() && colname.equals(Result.get(i).getColumnname())){
-                Value = Result.get(i).getColumnResult();
-            }
-         }
+           HashMap<String, String> hashmap= Result.get(index);
+           Value = hashmap.get(colname);
         return Value;
     }
 

@@ -22,13 +22,14 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class service_class {
     public static final String apiurl = "http://emailsmsservice.edevlopers.com/api/LoginRegister/";
 
     public interface Callback
     {
-        void onSuccess(ArrayList<DBColumnResult> Result);
+        void onSuccess(ArrayList<HashMap<String, String>> Result);
 
         void onError(String Error);
     }
@@ -66,18 +67,24 @@ public class service_class {
             customRequest jsonObjectRequest = new customRequest(Request.Method.POST, url, jsonObject, new Response.Listener<JSONArray>() {
                 @Override
                 public void onResponse(JSONArray response) {
-                    ArrayList<DBColumnResult> fed = new ArrayList<>();
+                  //  ArrayList<DBColumnResult> fed = new ArrayList<>();
+                    ArrayList<HashMap<String, String>> fed = new ArrayList<>();
                     try{
                         for(int i = 0;i < response.length();i++){
                             JSONObject explrObject = response.getJSONObject(i);
                             try{
+                                HashMap<String, String> map = new HashMap<>();
                                 for(int j = 0;j < dbcol.size();j++){
-                                    fed.add (new DBColumnResult(
-                                            dbcol.get(j).getColumnname(),
-                                            explrObject.getString(dbcol.get(j).getColumnname()),
-                                            i
-                                    ));
+//                                    fed.add (new DBColumnResult(
+//                                            dbcol.get(j).getColumnname(),
+//                                            explrObject.getString(dbcol.get(j).getColumnname()),
+//                                            i
+//                                    ));
+
+                                    map.put(dbcol.get(j).getColumnname(),explrObject.getString(dbcol.get(j).getColumnname()));
+
                                 }
+                                fed.add(map);
                             }catch (Exception e){
                                 callback.onError(explrObject.getString("Error"));
                             }
