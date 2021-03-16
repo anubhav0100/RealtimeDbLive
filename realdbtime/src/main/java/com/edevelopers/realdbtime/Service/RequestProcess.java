@@ -123,4 +123,22 @@ public class RequestProcess {
         return Value;
     }
 
+    public static void getdatamod_whereRaw(Context context, String ApiKey, String Api_Secret, String appname, String TableName ,int dbtype,int limit,
+                                  ArrayList<DBColumn> dbcolumn,String RawWhere ,final Callback callback){
+        ModelClass modelclass = new ModelClass();
+        ArrayList<DBColumnResult> emptycolres = new ArrayList<>();
+        ArrayList<DBColumnResult> emptycolwhere = new ArrayList<>();
+        modelclass = new ModelClass(context,ApiKey,Api_Secret,appname,TableName,dbcolumn,emptycolres,emptycolwhere, Const.GET_TAG_GETDATA,dbtype,limit);
+        service_class.RequestData(modelclass, new service_class.Callback() {
+            @Override
+            public void onSuccess(ArrayList<HashMap<String, String>> Result) {
+                callback.onSuccess(Result);
+            }
+
+            @Override
+            public void onError(String Error) {
+                callback.onError(Error);
+            }
+        });
+    }
 }

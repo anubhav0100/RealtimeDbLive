@@ -103,4 +103,44 @@ public class ConstNew {
         return result;
     }
 
+    public static String getMSSQLQuery_whereRaw(String TableName, ArrayList<DBColumn> DBcol,String DBcolres){
+
+        String result = "SELECT '[' + STUFF(( SELECT ',{";
+        String res = "";
+        int arrsize = DBcol.size();
+        arrsize = arrsize-1;
+        for(int i = 0; i < DBcol.size(); i++){
+            if(arrsize == i){
+                res += "\""+DBcol.get(i).getColumnname()+"\":\"' + CAST(["+DBcol.get(i).getColumnname()+"] AS NVARCHAR(MAX)) + '\"";
+            }
+            else{
+                res += "\""+DBcol.get(i).getColumnname()+"\":\"' + CAST(["+DBcol.get(i).getColumnname()+"] AS NVARCHAR(MAX)) + '\",' + '";
+            }
+        }
+
+        result += res;
+        result += "}' FROM ["+TableName+"] "+ DBcolres +" FOR XML PATH(''), TYPE  ).value('.', 'varchar(max)'),1,1,'' ) + ']' as best_result;";
+        return result;
+    }
+
+    public static String getMSSQLQuery_where_RawLimit(String limit, String TableName, ArrayList<DBColumn> DBcol,String DBcolres){
+
+        String result = "SELECT '[' + STUFF(( SELECT TOP ("+limit+") ',{";
+        String res = "";
+        int arrsize = DBcol.size();
+        arrsize = arrsize-1;
+        for(int i = 0; i < DBcol.size(); i++){
+            if(arrsize == i){
+                res += "\""+DBcol.get(i).getColumnname()+"\":\"' + CAST(["+DBcol.get(i).getColumnname()+"] AS NVARCHAR(MAX)) + '\"";
+            }
+            else{
+                res += "\""+DBcol.get(i).getColumnname()+"\":\"' + CAST(["+DBcol.get(i).getColumnname()+"] AS NVARCHAR(MAX)) + '\",' + '";
+            }
+        }
+
+        result += res;
+        result += "}' FROM ["+TableName+"] "+ DBcolres +" FOR XML PATH(''), TYPE  ).value('.', 'varchar(max)'),1,1,'' ) + ']' as best_result;";
+        return result;
+    }
+
 }

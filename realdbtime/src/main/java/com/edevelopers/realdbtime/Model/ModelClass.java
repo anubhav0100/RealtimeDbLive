@@ -74,6 +74,34 @@ public class ModelClass {
         }
     }
 
+    public ModelClass(Context context, String api_key, String apisecret, String appname, String TableName,
+                      ArrayList<DBColumn> dbcolumn,ArrayList<DBColumnResult> DBcolres,String DBcolwhere,int type,int db,int limit){
+        this.context = context;
+        this.api_key = api_key;
+        this.api_secret = apisecret;
+        this.appname = appname;
+        this.TableName = TableName;
+        this.dbcolumn = dbcolumn;
+        if(Const.GET_TAG_GETDATA_WHERE == type){
+            if(db == Const.MSSQL){
+                if(limit > 0){
+                    this.query = ConstNew.getMSSQLQuery_where_RawLimit(String.valueOf(limit),TableName,dbcolumn,DBcolwhere);
+                }
+                else {
+                    this.query = ConstNew.getMSSQLQuery_whereRaw(TableName,dbcolumn,DBcolwhere);
+                }
+            }
+            else {
+                if(limit > 0){
+                    this.query = Const.thirdlevelbuilder_whereRawLimit(String.valueOf(limit),TableName,dbcolumn,DBcolwhere);
+                }
+                else {
+                    this.query = Const.thirdlevelbuilder_whereRaw(TableName,dbcolumn,DBcolwhere);
+                }
+            }
+        }
+    }
+
     public ModelClass(Context context, String api_key, String apisecret, String Password,
                       ArrayList<DBColumn> dbcolumn,ArrayList<DBColumnResult> DBcolres,ArrayList<DBColumnResult> DBcolwhere,int type){
         this.context = context;

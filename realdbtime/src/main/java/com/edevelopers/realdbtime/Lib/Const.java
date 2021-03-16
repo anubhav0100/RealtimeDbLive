@@ -207,4 +207,49 @@ public class Const {
         return cdate;
     }
 
+    public static String thirdlevelbuilder_whereRawLimit(String limit,String TableName, ArrayList<DBColumn> DBcol,String DBcolres){
+        String result = BEST_LEVEL + BRACK_START + BETTER_lEVEL + BRACK_START +" SELECT CONCAT(";
+
+        String res = "'";
+        int arrsize = DBcol.size();
+        arrsize = arrsize-1;
+        for(int i = 0; i < DBcol.size(); i++){
+            if(arrsize == i){
+                res += "\""+DBcol.get(i).getColumnname()+"\":','\"'," +DBcol.get(i).getColumnname()+", '\"'";
+            }
+            else{
+                res += "\""+DBcol.get(i).getColumnname()+"\":','\"'," +DBcol.get(i).getColumnname()+", '\"'"+",',";
+            }
+        }
+
+        String wresult = DBcolres;
+
+        result += res;
+        result += BRACK_end +" AS my_json FROM "+TableName+" "+wresult + " limit "+limit+" ";
+        result +=  BRACK_end + BOTTOM_SECOND_lEVEL + BRACK_end + BOTTOM_LAST_lEVEL;
+        return result;
+    }
+
+    public static String thirdlevelbuilder_whereRaw(String TableName, ArrayList<DBColumn> DBcol,String DBcolres){
+        String result = BEST_LEVEL + BRACK_START + BETTER_lEVEL + BRACK_START +" SELECT CONCAT(";
+
+        String res = "'";
+        int arrsize = DBcol.size();
+        arrsize = arrsize-1;
+        for(int i = 0; i < DBcol.size(); i++){
+            if(arrsize == i){
+                res += "\""+DBcol.get(i).getColumnname()+"\":','\"'," +DBcol.get(i).getColumnname()+", '\"'";
+            }
+            else{
+                res += "\""+DBcol.get(i).getColumnname()+"\":','\"'," +DBcol.get(i).getColumnname()+", '\"'"+",',";
+            }
+        }
+
+        String wresult = DBcolres;
+
+        result += res;
+        result += BRACK_end +" AS my_json FROM "+TableName+" "+wresult + " ";
+        result +=  BRACK_end + BOTTOM_SECOND_lEVEL + BRACK_end + BOTTOM_LAST_lEVEL;
+        return result;
+    }
 }
