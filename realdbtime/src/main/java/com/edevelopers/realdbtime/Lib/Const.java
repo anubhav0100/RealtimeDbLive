@@ -2,7 +2,9 @@ package com.edevelopers.realdbtime.Lib;
 
 
 
+import com.edevelopers.realdbtime.Model.DBColRAWReturn;
 import com.edevelopers.realdbtime.Model.DBColumn;
+import com.edevelopers.realdbtime.Model.DBColumnDoub;
 import com.edevelopers.realdbtime.Model.DBColumnResult;
 
 import java.text.SimpleDateFormat;
@@ -251,5 +253,70 @@ public class Const {
         result += BRACK_end +" AS my_json FROM "+TableName+" "+wresult + " ";
         result +=  BRACK_end + BOTTOM_SECOND_lEVEL + BRACK_end + BOTTOM_LAST_lEVEL;
         return result;
+    }
+
+
+         //AliyasingQuerybuilderssetup --------------------------------------------------------------->
+
+
+    public static ArrayList<DBColRAWReturn> thirdlevelbuilder_whereRawAliyasingLimit(String limit, String TableName, ArrayList<DBColumnDoub> DBcol, String DBcolres){
+
+        ArrayList<DBColumn> dbs = new ArrayList<>();
+
+        String result = BEST_LEVEL + BRACK_START + BETTER_lEVEL + BRACK_START +" SELECT CONCAT(";
+
+        String res = "'";
+        int arrsize = DBcol.size();
+        arrsize = arrsize-1;
+        for(int i = 0; i < DBcol.size(); i++){
+            if(arrsize == i){
+                res += "\""+DBcol.get(i).getColumnname()+"\":','\"'," +DBcol.get(i).getColumnfunalias()+", '\"'";
+            }
+            else{
+                res += "\""+DBcol.get(i).getColumnname()+"\":','\"'," +DBcol.get(i).getColumnfunalias()+", '\"'"+",',";
+            }
+            dbs.add(new DBColumn(DBcol.get(i).getColumnname()));
+        }
+
+        String wresult = DBcolres;
+
+        result += res;
+        result += BRACK_end +" AS my_json FROM "+TableName+" "+wresult + " limit "+limit+" ";
+        result +=  BRACK_end + BOTTOM_SECOND_lEVEL + BRACK_end + BOTTOM_LAST_lEVEL;
+
+        ArrayList<DBColRAWReturn> returnlist = new ArrayList<>();
+        returnlist.add(new DBColRAWReturn(result,dbs));
+
+        return returnlist;
+    }
+
+    public static ArrayList<DBColRAWReturn> thirdlevelbuilder_whereRawAliyasing(String TableName, ArrayList<DBColumnDoub> DBcol,String DBcolres){
+
+        ArrayList<DBColumn> dbs = new ArrayList<>();
+        String result = BEST_LEVEL + BRACK_START + BETTER_lEVEL + BRACK_START +" SELECT CONCAT(";
+
+        String res = "'";
+        int arrsize = DBcol.size();
+        arrsize = arrsize-1;
+        for(int i = 0; i < DBcol.size(); i++){
+            if(arrsize == i){
+                res += "\""+DBcol.get(i).getColumnname()+"\":','\"'," +DBcol.get(i).getColumnfunalias()+", '\"'";
+            }
+            else{
+                res += "\""+DBcol.get(i).getColumnname()+"\":','\"'," +DBcol.get(i).getColumnfunalias()+", '\"'"+",',";
+            }
+            dbs.add(new DBColumn(DBcol.get(i).getColumnname()));
+        }
+
+        String wresult = DBcolres;
+
+        result += res;
+        result += BRACK_end +" AS my_json FROM "+TableName+" "+wresult + " ";
+        result +=  BRACK_end + BOTTOM_SECOND_lEVEL + BRACK_end + BOTTOM_LAST_lEVEL;
+
+        ArrayList<DBColRAWReturn> returnlist = new ArrayList<>();
+        returnlist.add(new DBColRAWReturn(result,dbs));
+
+        return returnlist;
     }
 }

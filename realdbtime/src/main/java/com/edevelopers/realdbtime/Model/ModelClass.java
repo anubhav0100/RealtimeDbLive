@@ -17,6 +17,7 @@ public class ModelClass {
     String TableName = "";
     String password = "";
     ArrayList<DBColumn> dbcolumn = new ArrayList<>();
+    ArrayList<DBColumnDoub> dbcolumndoub = new ArrayList<>();
 
     public ModelClass(){
 
@@ -97,6 +98,43 @@ public class ModelClass {
                 }
                 else {
                     this.query = Const.thirdlevelbuilder_whereRaw(TableName,dbcolumn,DBcolwhere);
+                }
+            }
+        }
+    }
+
+    public ModelClass(Context context, String api_key, String apisecret, String appname, String TableName,
+                      ArrayList<DBColumnDoub> dbcolumndoub,String DBcolwhere,int type,int db,int limit){
+        this.context = context;
+        this.api_key = api_key;
+        this.api_secret = apisecret;
+        this.appname = appname;
+        this.TableName = TableName;
+        this.dbcolumndoub = dbcolumndoub;
+        if(Const.GET_TAG_GETDATA_WHERE == type){
+            if(db == Const.MSSQL){
+                if(limit > 0){
+                    ArrayList<DBColRAWReturn> getcols = ConstNew.getMSSQLQuery_where_RawAliyasingLimit(String.valueOf(limit),TableName,dbcolumndoub,DBcolwhere);
+                    this.query = getcols.get(0).getQuery();
+                    this.dbcolumn = getcols.get(0).getDbcols();
+                }
+                else {
+                    ArrayList<DBColRAWReturn> getcols = ConstNew.getMSSQLQuery_whereRawAliyasing(TableName,dbcolumndoub,DBcolwhere);
+                    this.query = getcols.get(0).getQuery();
+                    this.dbcolumn = getcols.get(0).getDbcols();
+                }
+            }
+            else {
+                if(limit > 0){
+                    ArrayList<DBColRAWReturn> getcols = Const.thirdlevelbuilder_whereRawAliyasingLimit(String.valueOf(limit),TableName,dbcolumndoub,DBcolwhere);
+                    this.query = getcols.get(0).getQuery();
+                    this.dbcolumn = getcols.get(0).getDbcols();
+
+                }
+                else {
+                    ArrayList<DBColRAWReturn> getcols = Const.thirdlevelbuilder_whereRawAliyasing(TableName,dbcolumndoub,DBcolwhere);
+                    this.query = getcols.get(0).getQuery();
+                    this.dbcolumn = getcols.get(0).getDbcols();
                 }
             }
         }

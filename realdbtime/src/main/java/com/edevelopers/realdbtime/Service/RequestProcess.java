@@ -4,6 +4,7 @@ import android.content.Context;
 
 import com.edevelopers.realdbtime.Lib.Const;
 import com.edevelopers.realdbtime.Model.DBColumn;
+import com.edevelopers.realdbtime.Model.DBColumnDoub;
 import com.edevelopers.realdbtime.Model.DBColumnResult;
 import com.edevelopers.realdbtime.Model.ModelClass;
 
@@ -13,6 +14,7 @@ import java.util.HashMap;
 public class RequestProcess {
 
     public static ArrayList<DBColumn> dbcol;
+    public static ArrayList<DBColumnDoub> dbcolDoub;
     public static ArrayList<DBColumnResult> dbcolwhere;
     public static ArrayList<DBColumnResult> dbcolinsert;
 
@@ -32,6 +34,10 @@ public class RequestProcess {
 
     public static void setmodelmod(String Colname){
         dbcol.add(new DBColumn(Colname));
+    }
+
+    public static void setmodelDoub(String Colname,String ConameAlias){
+        dbcolDoub.add(new DBColumnDoub(Colname,ConameAlias));
     }
 
     public static void setmodelmodWhere(String Colname,String Value){
@@ -128,7 +134,24 @@ public class RequestProcess {
         ModelClass modelclass = new ModelClass();
         ArrayList<DBColumnResult> emptycolres = new ArrayList<>();
         ArrayList<DBColumnResult> emptycolwhere = new ArrayList<>();
-        modelclass = new ModelClass(context,ApiKey,Api_Secret,appname,TableName,dbcolumn,emptycolres,emptycolwhere, Const.GET_TAG_GETDATA,dbtype,limit);
+        modelclass = new ModelClass(context,ApiKey,Api_Secret,appname,TableName,dbcolumn,emptycolres,RawWhere, Const.GET_TAG_GETDATA,dbtype,limit);
+        service_class.RequestData(modelclass, new service_class.Callback() {
+            @Override
+            public void onSuccess(ArrayList<HashMap<String, String>> Result) {
+                callback.onSuccess(Result);
+            }
+
+            @Override
+            public void onError(String Error) {
+                callback.onError(Error);
+            }
+        });
+    }
+
+    public static void getdatamod_whereRawAlias(Context context, String ApiKey, String Api_Secret, String appname, String TableName ,int dbtype,int limit,
+                                           ArrayList<DBColumnDoub> dbcolumn,String RawWhere ,final Callback callback){
+        ModelClass modelclass = new ModelClass();
+        modelclass = new ModelClass(context,ApiKey,Api_Secret,appname,TableName,dbcolumn,RawWhere, Const.GET_TAG_GETDATA,dbtype,limit);
         service_class.RequestData(modelclass, new service_class.Callback() {
             @Override
             public void onSuccess(ArrayList<HashMap<String, String>> Result) {

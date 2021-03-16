@@ -1,6 +1,8 @@
 package com.edevelopers.realdbtime.Lib;
 
+import com.edevelopers.realdbtime.Model.DBColRAWReturn;
 import com.edevelopers.realdbtime.Model.DBColumn;
+import com.edevelopers.realdbtime.Model.DBColumnDoub;
 import com.edevelopers.realdbtime.Model.DBColumnResult;
 
 import java.util.ArrayList;
@@ -141,6 +143,62 @@ public class ConstNew {
         result += res;
         result += "}' FROM ["+TableName+"] "+ DBcolres +" FOR XML PATH(''), TYPE  ).value('.', 'varchar(max)'),1,1,'' ) + ']' as best_result;";
         return result;
+    }
+
+
+    //AliyasingQuerybuilderssetup --------------------------------------------------------------->
+
+    public static ArrayList<DBColRAWReturn> getMSSQLQuery_whereRawAliyasing(String TableName, ArrayList<DBColumnDoub> DBcol,String DBcolres){
+
+        ArrayList<DBColumn> dbs = new ArrayList<>();
+        String result = "SELECT '[' + STUFF(( SELECT ',{";
+        String res = "";
+        int arrsize = DBcol.size();
+        arrsize = arrsize-1;
+        for(int i = 0; i < DBcol.size(); i++){
+            if(arrsize == i){
+                res += "\""+DBcol.get(i).getColumnname()+"\":\"' + CAST(["+DBcol.get(i).getColumnfunalias()+"] AS NVARCHAR(MAX)) + '\"";
+            }
+            else{
+                res += "\""+DBcol.get(i).getColumnname()+"\":\"' + CAST(["+DBcol.get(i).getColumnfunalias()+"] AS NVARCHAR(MAX)) + '\",' + '";
+            }
+            dbs.add(new DBColumn(DBcol.get(i).getColumnname()));
+        }
+
+        result += res;
+        result += "}' FROM ["+TableName+"] "+ DBcolres +" FOR XML PATH(''), TYPE  ).value('.', 'varchar(max)'),1,1,'' ) + ']' as best_result;";
+
+        ArrayList<DBColRAWReturn> returnlist = new ArrayList<>();
+        returnlist.add(new DBColRAWReturn(result,dbs));
+
+        return returnlist;
+    }
+
+    public static ArrayList<DBColRAWReturn> getMSSQLQuery_where_RawAliyasingLimit(String limit, String TableName, ArrayList<DBColumnDoub> DBcol, String DBcolres){
+
+        ArrayList<DBColumn> dbs = new ArrayList<>();
+
+        String result = "SELECT '[' + STUFF(( SELECT TOP ("+limit+") ',{";
+        String res = "";
+        int arrsize = DBcol.size();
+        arrsize = arrsize-1;
+        for(int i = 0; i < DBcol.size(); i++){
+            if(arrsize == i){
+                res += "\""+DBcol.get(i).getColumnname()+"\":\"' + CAST(["+DBcol.get(i).getColumnfunalias()+"] AS NVARCHAR(MAX)) + '\"";
+            }
+            else{
+                res += "\""+DBcol.get(i).getColumnname()+"\":\"' + CAST(["+DBcol.get(i).getColumnfunalias()+"] AS NVARCHAR(MAX)) + '\",' + '";
+            }
+            dbs.add(new DBColumn(DBcol.get(i).getColumnname()));
+        }
+
+        result += res;
+        result += "}' FROM ["+TableName+"] "+ DBcolres +" FOR XML PATH(''), TYPE  ).value('.', 'varchar(max)'),1,1,'' ) + ']' as best_result;";
+
+        ArrayList<DBColRAWReturn> returnlist = new ArrayList<>();
+        returnlist.add(new DBColRAWReturn(result,dbs));
+
+        return returnlist;
     }
 
 }
