@@ -31,10 +31,12 @@ public class MainActivity extends AppCompatActivity {
 
       //  RequestProcess.setmodelmodWhere("email","info@something.com");
 
-        String ApiKEy = "apiem_live_aap_AK/jLZvU5R7eWVUKmX5C6XcFcNMsp96ldF0w8qT93P7EQ6L4WDqBbQQhXEv/Yg5G/Q==";
-        String ApiSecret = "secreteml_live_secret_ANtd1RW2KQQPDaQFr0flsrOci4nlJ8SGp3e6RThzzHEyqMtIv58tCPTL1Hx873JFHw==";
+        String ApiKEy = "Api Key";
+        String ApiSecret = "APi Secret";
         String AppName = "App";
         String Table_Name = "users";
+
+        Const.API_URL ="";
 
         RequestProcess.getdatamod(MainActivity.this, ApiKEy, ApiSecret, AppName, Table_Name, Const.MSSQL,0,RequestProcess.dbcol, new RequestProcess.Callback() {
             @Override

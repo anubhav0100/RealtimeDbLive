@@ -13,6 +13,9 @@ import java.util.Date;
 
 public class Const {
 
+
+    public static String API_URL = "";
+
     public static final int GET_TAG_INSERT = 1;
     public static final int GET_TAG_UPDATE = 2;
     public static final int GET_TAG_GETDATA = 3;

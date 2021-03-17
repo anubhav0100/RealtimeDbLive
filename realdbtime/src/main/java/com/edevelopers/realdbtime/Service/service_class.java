@@ -25,7 +25,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class service_class {
-    public static final String apiurl = "http://emailsmsservice.edevlopers.com/api/LoginRegister/";
+    public static final String apiurl = Const.API_URL;
 
     public interface Callback
     {
