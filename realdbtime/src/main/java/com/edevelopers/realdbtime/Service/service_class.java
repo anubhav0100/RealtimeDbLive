@@ -86,7 +86,7 @@ public class service_class {
                                 }
                                 fed.add(map);
                             }catch (Exception e){
-                                callback.onError(explrObject.getString("Error"));
+                                callback.onError(explrObject.getString("error"));
                             }
                         }
                     }
