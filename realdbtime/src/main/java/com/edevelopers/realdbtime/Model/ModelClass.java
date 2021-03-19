@@ -43,7 +43,7 @@ public class ModelClass {
                     this.query = ConstNew.getMSSQLQuery(TableName,dbcolumn);
                 }
             }
-            else {
+            else if(db == Const.MYSQL){
                 if(limit > 0){
                     this.query = Const.thirdlevelbuilderLimit(String.valueOf(limit),TableName,dbcolumn);
                 }
@@ -64,7 +64,7 @@ public class ModelClass {
                     this.query = ConstNew.getMSSQLQuery_where(TableName,dbcolumn,DBcolwhere);
                 }
             }
-            else {
+            else if(db == Const.MYSQL) {
                 if(limit > 0){
                     this.query = Const.thirdlevelbuilder_whereLimit(String.valueOf(limit),TableName,dbcolumn,DBcolwhere);
                 }
@@ -92,7 +92,7 @@ public class ModelClass {
                     this.query = ConstNew.getMSSQLQuery_whereRaw(TableName,dbcolumn,DBcolwhere);
                 }
             }
-            else {
+            else if(db == Const.MYSQL) {
                 if(limit > 0){
                     this.query = Const.thirdlevelbuilder_whereRawLimit(String.valueOf(limit),TableName,dbcolumn,DBcolwhere);
                 }
@@ -124,7 +124,7 @@ public class ModelClass {
                     this.dbcolumn = getcols.get(0).getDbcols();
                 }
             }
-            else {
+            else if(db == Const.MYSQL) {
                 if(limit > 0){
                     ArrayList<DBColRAWReturn> getcols = Const.thirdlevelbuilder_whereRawAliyasingLimit(String.valueOf(limit),TableName,dbcolumndoub,DBcolwhere);
                     this.query = getcols.get(0).getQuery();

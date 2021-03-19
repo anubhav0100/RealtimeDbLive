@@ -52,7 +52,6 @@ public class service_class {
         RequestQueue queue= Volley.newRequestQueue(Modeldata.getContext());
         String url = apiurl+"getresult";
         final ArrayList<DBColumn> dbcol = Modeldata.getDbcolumn();
-
         JSONObject jsonObject = new JSONObject();
         try {
             jsonObject.accumulate(Const.api_key, Modeldata.getApi_key());
@@ -62,12 +61,10 @@ public class service_class {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-
         try{
             customRequest jsonObjectRequest = new customRequest(Request.Method.POST, url, jsonObject, new Response.Listener<JSONArray>() {
                 @Override
                 public void onResponse(JSONArray response) {
-                  //  ArrayList<DBColumnResult> fed = new ArrayList<>();
                     ArrayList<HashMap<String, String>> fed = new ArrayList<>();
                     try{
                         for(int i = 0;i < response.length();i++){
@@ -75,14 +72,7 @@ public class service_class {
                             try{
                                 HashMap<String, String> map = new HashMap<>();
                                 for(int j = 0;j < dbcol.size();j++){
-//                                    fed.add (new DBColumnResult(
-//                                            dbcol.get(j).getColumnname(),
-//                                            explrObject.getString(dbcol.get(j).getColumnname()),
-//                                            i
-//                                    ));
-
                                     map.put(dbcol.get(j).getColumnname(),explrObject.getString(dbcol.get(j).getColumnname()));
-
                                 }
                                 fed.add(map);
                             }catch (Exception e){
@@ -114,8 +104,6 @@ public class service_class {
     public static void SaveData(ModelClass Modeldata, final Callbackres callback){
         RequestQueue queue= Volley.newRequestQueue(Modeldata.getContext());
         String url = apiurl+"saveresult";
-       // final ArrayList<DBColumn> dbcol = Modeldata.getDbcolumn();
-
         JSONObject jsonObject = new JSONObject();
         try {
             jsonObject.accumulate(Const.api_key, Modeldata.getApi_key());
@@ -125,12 +113,10 @@ public class service_class {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-
         try{
             customRequest jsonObjectRequest = new customRequest(Request.Method.POST, url, jsonObject, new Response.Listener<JSONArray>() {
                 @Override
                 public void onResponse(JSONArray response) {
-
                     try{
                         for(int i = 0;i < response.length();i++){
                             JSONObject explrObject = response.getJSONObject(i);
@@ -164,8 +150,6 @@ public class service_class {
     public static void SaveDataRegister(@NonNull ModelClass Modeldata, final Callbackres callback){
         RequestQueue queue= Volley.newRequestQueue(Modeldata.getContext());
         String url = apiurl+"RegisterUser";
-        // final ArrayList<DBColumn> dbcol = Modeldata.getDbcolumn();
-
         JSONObject jsonObject = new JSONObject();
         try {
             jsonObject.accumulate(Const.api_key, Modeldata.getApi_key());
@@ -176,7 +160,6 @@ public class service_class {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-
         try{
             customRequest jsonObjectRequest = new customRequest(Request.Method.POST, url, jsonObject, new Response.Listener<JSONArray>() {
                 @Override
@@ -190,7 +173,6 @@ public class service_class {
                             }catch (Exception e){
                                 callback.onError(explrObject.getString("error"));
                                 return;
-
                             }
                         }
                     }
@@ -205,7 +187,6 @@ public class service_class {
                     callback.onError(error.getMessage());
                 }
             });
-
             queue.add(jsonObjectRequest);
         }catch (Exception e) {
             Log.d(Const.TAG,""+e.getMessage());
@@ -215,7 +196,6 @@ public class service_class {
     public static void RequestDataLogin(Context context, String ApiKEy, String ApiSecret, String Username, String Password, final service_class.Callbacklogin callback){
         RequestQueue queue= Volley.newRequestQueue(context);
         String url = apiurl+"LoginUser";
-
         JSONObject jsonObject = new JSONObject();
         try {
             jsonObject.accumulate(Const.api_key, ApiKEy);
@@ -225,7 +205,6 @@ public class service_class {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-
         try{
             customRequest jsonObjectRequest = new customRequest(Request.Method.POST, url, jsonObject, new Response.Listener<JSONArray>() {
                 @Override
@@ -261,7 +240,6 @@ public class service_class {
                         callback.onError(e.getMessage());
                         return;
                     }
-
                     callback.onSuccess(fed);
                 }
             }, new Response.ErrorListener() {
@@ -270,11 +248,9 @@ public class service_class {
                     callback.onError(error.getMessage());
                 }
             });
-
             queue.add(jsonObjectRequest);
         }catch (Exception e) {
             Log.d(Const.TAG,""+e.getMessage());
         }
     }
-
 }
