@@ -166,7 +166,7 @@ public class ConstNew {
         }
 
         result += res;
-        result += "}' FROM ["+TableName+"] "+ DBcolres +" FOR XML PATH(''), TYPE  ).value('.', 'varchar(max)'),1,1,'' ) + ']' as best_result;";
+        result += "}' FROM  ["+TableName+"]  "+ DBcolres +" FOR XML PATH(''), TYPE  ).value('.', 'varchar(max)'),1,1,'' ) + ']' as best_result;";
 
         ArrayList<DBColRAWReturn> returnlist = new ArrayList<>();
         returnlist.add(new DBColRAWReturn(result,dbs));
@@ -193,7 +193,7 @@ public class ConstNew {
         }
 
         result += res;
-        result += "}' FROM ["+TableName+"] "+ DBcolres +" FOR XML PATH(''), TYPE  ).value('.', 'varchar(max)'),1,1,'' ) + ']' as best_result;";
+        result += "}' FROM  "+TableName+"  "+ DBcolres +" FOR XML PATH(''), TYPE  ).value('.', 'varchar(max)'),1,1,'' ) + ']' as best_result;";
 
         ArrayList<DBColRAWReturn> returnlist = new ArrayList<>();
         returnlist.add(new DBColRAWReturn(result,dbs));
