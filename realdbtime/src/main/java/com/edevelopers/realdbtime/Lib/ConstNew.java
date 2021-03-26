@@ -157,16 +157,16 @@ public class ConstNew {
         arrsize = arrsize-1;
         for(int i = 0; i < DBcol.size(); i++){
             if(arrsize == i){
-                res += "\""+DBcol.get(i).getColumnname()+"\":\"' + CAST(["+DBcol.get(i).getColumnfunalias()+"] AS NVARCHAR(MAX)) + '\"";
+                res += "\""+DBcol.get(i).getColumnname()+"\":\"' + CAST("+DBcol.get(i).getColumnfunalias()+" AS NVARCHAR(MAX)) + '\"";
             }
             else{
-                res += "\""+DBcol.get(i).getColumnname()+"\":\"' + CAST(["+DBcol.get(i).getColumnfunalias()+"] AS NVARCHAR(MAX)) + '\",' + '";
+                res += "\""+DBcol.get(i).getColumnname()+"\":\"' + CAST("+DBcol.get(i).getColumnfunalias()+" AS NVARCHAR(MAX)) + '\",' + '";
             }
             dbs.add(new DBColumn(DBcol.get(i).getColumnname()));
         }
 
         result += res;
-        result += "}' FROM  ["+TableName+"]  "+ DBcolres +" FOR XML PATH(''), TYPE  ).value('.', 'varchar(max)'),1,1,'' ) + ']' as best_result;";
+        result += "}' FROM  "+TableName+"  "+ DBcolres +" FOR XML PATH(''), TYPE  ).value('.', 'varchar(max)'),1,1,'' ) + ']' as best_result;";
 
         ArrayList<DBColRAWReturn> returnlist = new ArrayList<>();
         returnlist.add(new DBColRAWReturn(result,dbs));
@@ -184,10 +184,10 @@ public class ConstNew {
         arrsize = arrsize-1;
         for(int i = 0; i < DBcol.size(); i++){
             if(arrsize == i){
-                res += "\""+DBcol.get(i).getColumnname()+"\":\"' + CAST(["+DBcol.get(i).getColumnfunalias()+"] AS NVARCHAR(MAX)) + '\"";
+                res += "\""+DBcol.get(i).getColumnname()+"\":\"' + CAST("+DBcol.get(i).getColumnfunalias()+" AS NVARCHAR(MAX)) + '\"";
             }
             else{
-                res += "\""+DBcol.get(i).getColumnname()+"\":\"' + CAST(["+DBcol.get(i).getColumnfunalias()+"] AS NVARCHAR(MAX)) + '\",' + '";
+                res += "\""+DBcol.get(i).getColumnname()+"\":\"' + CAST("+DBcol.get(i).getColumnfunalias()+" AS NVARCHAR(MAX)) + '\",' + '";
             }
             dbs.add(new DBColumn(DBcol.get(i).getColumnname()));
         }
