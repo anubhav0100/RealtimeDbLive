@@ -5,6 +5,7 @@ import android.content.Context;
 
 import com.edevelopers.realdbtime.Lib.Const;
 import com.edevelopers.realdbtime.Lib.ConstNew;
+import com.edevelopers.realdbtime.Lib.ConstOrc;
 
 import java.util.ArrayList;
 
@@ -32,7 +33,13 @@ public class ModelClass {
         this.TableName = TableName;
         this.dbcolumn = dbcolumn;
         if(Const.GET_TAG_INSERT == type){
-            this.query = Const.insertQueryBuilder(TableName,DBcolres);
+            if(db == Const.MSSQL){
+                this.query = ConstNew.insertQueryBuilder(TableName,DBcolres);
+            }else if(db == Const.MYSQL){
+                this.query = Const.insertQueryBuilder(TableName,DBcolres);
+            }else if(db == Const.ORACLE){
+                this.query = ConstOrc.insertQueryBuilder(TableName,DBcolres);
+            }
         }
         else if(Const.GET_TAG_GETDATA == type){
             if(db == Const.MSSQL){
@@ -51,9 +58,23 @@ public class ModelClass {
                     this.query = Const.thirdlevelbuilder(TableName,dbcolumn);
                 }
             }
+            else if(db == Const.ORACLE){
+                if(limit > 0){
+                    this.query = ConstOrc.getORACLEQueryLimit(String.valueOf(limit),TableName,dbcolumn);
+                }
+                else {
+                    this.query = ConstOrc.getORACLEQuery(TableName,dbcolumn);
+                }
+            }
         }
         if(Const.GET_TAG_UPDATE == type){
-            this.query = Const.updateQueryBuilder(TableName,DBcolres,DBcolwhere);
+            if(db == Const.MSSQL){
+                this.query = ConstNew.updateQueryBuilder(TableName,DBcolres,DBcolwhere);
+            }else if(db == Const.MYSQL){
+                this.query = Const.updateQueryBuilder(TableName,DBcolres,DBcolwhere);
+            }else if(db == Const.ORACLE){
+                this.query = ConstOrc.updateQueryBuilder(TableName,DBcolres,DBcolwhere);
+            }
         }
         else if(Const.GET_TAG_GETDATA_WHERE == type){
             if(db == Const.MSSQL){
@@ -70,6 +91,14 @@ public class ModelClass {
                 }
                 else {
                     this.query = Const.thirdlevelbuilder_where(TableName,dbcolumn,DBcolwhere);
+                }
+            }
+            else if(db == Const.ORACLE) {
+                if(limit > 0){
+                    this.query = ConstOrc.getORACLEQuery_where_Limit(String.valueOf(limit),TableName,dbcolumn,DBcolwhere);
+                }
+                else {
+                    this.query =  ConstOrc.getORACLEQuery_where(TableName,dbcolumn,DBcolwhere);
                 }
             }
         }
@@ -98,6 +127,14 @@ public class ModelClass {
                 }
                 else {
                     this.query = Const.thirdlevelbuilder_whereRaw(TableName,dbcolumn,DBcolwhere);
+                }
+            }
+            else if(db == Const.ORACLE) {
+                if(limit > 0){
+                    this.query = ConstOrc.getORACLEQuery_where_RawLimit(String.valueOf(limit),TableName,dbcolumn,DBcolwhere);
+                }
+                else {
+                    this.query = ConstOrc.getORACLEQuery_whereRaw(TableName,dbcolumn,DBcolwhere);
                 }
             }
         }
@@ -133,6 +170,19 @@ public class ModelClass {
                 }
                 else {
                     ArrayList<DBColRAWReturn> getcols = Const.thirdlevelbuilder_whereRawAliyasing(TableName,dbcolumndoub,DBcolwhere);
+                    this.query = getcols.get(0).getQuery();
+                    this.dbcolumn = getcols.get(0).getDbcols();
+                }
+            }
+            else if(db == Const.ORACLE) {
+                if(limit > 0){
+                    ArrayList<DBColRAWReturn> getcols = ConstOrc.getORACLEQuery_where_RawAliyasingLimit(String.valueOf(limit),TableName,dbcolumndoub,DBcolwhere);
+                    this.query = getcols.get(0).getQuery();
+                    this.dbcolumn = getcols.get(0).getDbcols();
+
+                }
+                else {
+                    ArrayList<DBColRAWReturn> getcols = ConstOrc.getORACLEQuery_whereRawAliyasing(TableName,dbcolumndoub,DBcolwhere);
                     this.query = getcols.get(0).getQuery();
                     this.dbcolumn = getcols.get(0).getDbcols();
                 }

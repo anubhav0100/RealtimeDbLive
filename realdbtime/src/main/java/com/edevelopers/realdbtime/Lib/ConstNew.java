@@ -9,6 +9,15 @@ import java.util.ArrayList;
 
 public class ConstNew {
 
+    public static final String INSERT_START_INIT = "INSERT INTO ";
+    public static final String INSERT_START_VALUES = "VALUES ";
+    public static final String INSERT_HEAD_DECLARE_start = " [";
+    public static final String INSERT_HEAD_DECLARE_end = " [";
+    public static final String INSERT_separater_DECLARE = ",";
+    public static final String INSERT_VALUE_HEAD_DECLARE = "'";
+    public static final String BRACK_START = " ( ";
+    public static final String BRACK_end = " ) ";
+
     public static String getMSSQLQuery(String TableName, ArrayList<DBColumn> DBcol){
 
         String result = "SELECT '[' + STUFF(( SELECT ',{";
@@ -201,4 +210,47 @@ public class ConstNew {
         return returnlist;
     }
 
+    public static String updateQueryBuilder(String TableName, ArrayList<DBColumnResult> DBcolvalue, ArrayList<DBColumnResult> DBcolwhere){
+        String HeadUPdate = "UPDATE  ["+TableName+"] SET ";
+        String upcalus = "";
+        int uparrsize = DBcolvalue.size();
+        uparrsize = uparrsize -1;
+        for(int i = 0; i < DBcolvalue.size(); i++){
+            if(uparrsize == i){
+                upcalus += "[" +DBcolvalue.get(i).getColumnname()+"] = '"+ DBcolvalue.get(i).getColumnResult()+"' " ;
+            }else{
+                upcalus += "[" +DBcolvalue.get(i).getColumnname()+"] = '"+ DBcolvalue.get(i).getColumnResult()+"',  " ;
+            }
+        }
+
+        String wresult = wclausebuilder(DBcolwhere);
+        String result = HeadUPdate + upcalus + wresult +" ;";
+        return result;
+    }
+
+    public static String insertQueryBuilder(String TableName, ArrayList<DBColumnResult> DBcolres){
+        String start_result = INSERT_START_INIT + INSERT_HEAD_DECLARE_start + TableName + INSERT_HEAD_DECLARE_end + BRACK_START ;
+        String end_result = INSERT_START_VALUES + BRACK_START ;
+
+        String end_start_result = BRACK_end;
+        String end_end_result = BRACK_end+";";
+
+        String res_st = "";
+        String res_end = "";
+        int arrsize = DBcolres.size();
+        arrsize = arrsize-1;
+        for(int i = 0; i < DBcolres.size(); i++){
+            if(arrsize == i){
+                res_st += INSERT_HEAD_DECLARE_start+DBcolres.get(i).getColumnname()+INSERT_HEAD_DECLARE_end;
+                res_end += INSERT_VALUE_HEAD_DECLARE+DBcolres.get(i).getColumnResult()+INSERT_VALUE_HEAD_DECLARE;
+            }
+            else{
+                res_st += INSERT_HEAD_DECLARE_start+DBcolres.get(i).getColumnname()+INSERT_HEAD_DECLARE_end+INSERT_separater_DECLARE;
+                res_end += INSERT_VALUE_HEAD_DECLARE+DBcolres.get(i).getColumnResult()+INSERT_VALUE_HEAD_DECLARE+INSERT_separater_DECLARE;
+            }
+        }
+
+        String result = start_result + res_st + end_start_result + end_result + res_end + end_end_result;
+        return result;
+    }
 }

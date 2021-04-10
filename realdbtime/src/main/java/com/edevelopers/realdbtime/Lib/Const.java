@@ -23,6 +23,7 @@ public class Const {
 
     public static final int MSSQL = 1;
     public static final int MYSQL = 2;
+    public static final int ORACLE = 3;
 
 
     public static final String TAG = "RealTime_Db_Live";

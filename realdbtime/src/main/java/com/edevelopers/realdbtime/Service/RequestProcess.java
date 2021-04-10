@@ -85,12 +85,12 @@ public class RequestProcess {
         });
     }
 
-    public static void savedatamod(Context context, String ApiKey, String Api_Secret, String appname, String TableName ,
+    public static void savedatamod(Context context, String ApiKey, String Api_Secret, String appname, String TableName ,int dbtype,
                                    ArrayList<DBColumnResult> dbcolres, final Callbackres callback){
         ModelClass modelclass = new ModelClass();
         ArrayList<DBColumn> emptydbcolumn = new ArrayList<>();
         ArrayList<DBColumnResult> emptycolwhere = new ArrayList<>();
-        modelclass = new ModelClass(context,ApiKey,Api_Secret,appname,TableName,emptydbcolumn,dbcolres,emptycolwhere, Const.GET_TAG_INSERT,0,0);
+        modelclass = new ModelClass(context,ApiKey,Api_Secret,appname,TableName,emptydbcolumn,dbcolres,emptycolwhere, Const.GET_TAG_INSERT,dbtype,0);
         service_class.SaveData(modelclass, new service_class.Callbackres() {
             @Override
             public void onSuccess(String Result) {
@@ -104,11 +104,11 @@ public class RequestProcess {
         });
     }
 
-    public static void updatedatamod(Context context, String ApiKey, String Api_Secret, String appname, String TableName ,
+    public static void updatedatamod(Context context, String ApiKey, String Api_Secret, String appname, String TableName ,int dbtype,
                                      ArrayList<DBColumnResult> DBcolres, ArrayList<DBColumnResult> DBcolres_where, final Callbackres callback){
         ModelClass modelclass = new ModelClass();
         ArrayList<DBColumn> emptydbcolumn = new ArrayList<>();
-        modelclass = new ModelClass(context,ApiKey,Api_Secret,appname,TableName,emptydbcolumn,DBcolres,DBcolres_where, Const.GET_TAG_UPDATE,0,0);
+        modelclass = new ModelClass(context,ApiKey,Api_Secret,appname,TableName,emptydbcolumn,DBcolres,DBcolres_where, Const.GET_TAG_UPDATE,dbtype,0);
         service_class.SaveData(modelclass, new service_class.Callbackres() {
             @Override
             public void onSuccess(String Result) {
